@@ -8,12 +8,11 @@ module.exports = options => {
   return function* rbac(next) {
     // this is instance of Context
     if (options.getRoleName) {
-      yield options.getRoleName(this)
-        .then(roleName => {
-          if (roleName) {
-            this.role = new Role(this.app.rbac, roleName);
-          }
-        });
+      const roleName = yield options.getRoleName(this);
+      if (roleName) {
+        this.role = new Role(this.app.rbac, roleName);
+        yield this.role.init();
+      }
     } else {
       assert(false, '[egg-plugin] when use rbac plugin must difine options.getRoleName function');
     }
