@@ -1,7 +1,5 @@
 'use strict';
 
 module.exports = app => {
-  app.get('/', function* () {
-    this.body = 'hi, ' + app.plugins.rbac.name;
-  });
+  app.get('/admin', app.rbac.can('query_user'), 'admin.index');
 };
