@@ -18,6 +18,8 @@
   "devDependencies": {
     "autod": "^2.10.1",
     "autod-egg": "^1.0.0",
+    "await-event": "^2.1.0",
+    "debug": "^3.1.0",
     "egg": "^1.10.0",
     "egg-bin": "^4.3.5",
     "egg-ci": "^1.8.0",
@@ -25,6 +27,7 @@
     "egg-mongoose": "^2.1.1",
     "eslint": "^4.10.0",
     "eslint-config-egg": "^5.1.1",
+    "mongoose": "^4.13.1",
     "power-assert": "^1.4.4",
     "supertest": "^3.0.0"
   },
@@ -50,12 +53,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eggjs/egg-rbac.git"
+    "url": "git+https://github.com/lidianhao123/egg-rbac.git"
   },
   "bugs": {
-    "url": "https://github.com/eggjs/egg/issues"
+    "url": "https://github.com/lidianhao123/egg-rbac/issues"
   },
-  "homepage": "https://github.com/eggjs/egg-rbac#readme",
-  "author": "dainli@lookout.com",
+  "homepage": "https://github.com/lidianhao123/egg-rbac#readme",
+  "author": "dainli@outlook.com",
   "license": "MIT"
 }
