@@ -3,6 +3,7 @@
 const mm = require('egg-mock');
 const assert = require('power-assert');
 const permissions = require('./fixtures/apps/rbac-test/config/rbac').permissions;
+const Role = require('../lib/role');
 
 describe('test/rbac.test.js', () => {
   let app;
@@ -87,6 +88,15 @@ describe('test/rbac.test.js', () => {
     const result = yield app.rbac._initRole(roles);
     assert(result[0].ok === 1);
     assert(result[1].ok === 1);
+  });
+
+  it('should return role when new Role width roleName and permissions', function* () {
+    const roleName = roles[0].name;
+    const permissions = yield app.rbac.getRolePermission(roleName);
+    const role = new Role(roleName, permissions);
+
+    assert(role.roleName === roleName);
+    assert(role.canAll(roles[0].grants));
   });
 
   it('should GET /admin 200 when role is admin', function* () {
