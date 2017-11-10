@@ -7,14 +7,20 @@ const assert = require('assert');
 module.exports = options => {
   return function* rbac(next) {
     // this is instance of Context
-    if (options.getRoleName) {
+    // TODO support session
+    let permissions;
+    if (!this.session.permission) {
       const roleName = yield options.getRoleName(this);
       if (roleName) {
-        this.role = new Role(this.app.rbac, roleName);
-        yield this.role.init();
+        permissions = yield this.app.rbac.getRolePermission(roleName);
+        this.role = new Role(roleName, permissions);
+        this.session.permission = {
+          roleName,
+          permissions,
+        };
       }
     } else {
-      assert(false, '[egg-plugin] when use rbac plugin must difine options.getRoleName function');
+      this.role = new Role(this.session.permission.roleName, this.session.permission.permissions);
     }
 
     yield next;
