@@ -10,12 +10,12 @@
 
 [npm-image]: https://img.shields.io/npm/v/egg-rbac.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/egg-rbac
-[travis-image]: https://img.shields.io/travis/eggjs/egg-rbac.svg?style=flat-square
-[travis-url]: https://travis-ci.org/eggjs/egg-rbac
-[codecov-image]: https://img.shields.io/codecov/c/github/eggjs/egg-rbac.svg?style=flat-square
-[codecov-url]: https://codecov.io/github/eggjs/egg-rbac?branch=master
-[david-image]: https://img.shields.io/david/eggjs/egg-rbac.svg?style=flat-square
-[david-url]: https://david-dm.org/eggjs/egg-rbac
+[travis-image]: https://img.shields.io/travis/lidianhao123/egg-rbac.svg?style=flat-square
+[travis-url]: https://travis-ci.org/lidianhao123/egg-rbac
+[codecov-image]: https://img.shields.io/codecov/c/github/lidianhao123/egg-rbac.svg?style=flat-square
+[codecov-url]: https://codecov.io/github/lidianhao123/egg-rbac?branch=master
+[david-image]: https://img.shields.io/david/lidianhao123/egg-rbac.svg?style=flat-square
+[david-url]: https://david-dm.org/lidianhao123/egg-rbac
 [snyk-image]: https://snyk.io/test/npm/egg-rbac/badge.svg?style=flat-square
 [snyk-url]: https://snyk.io/test/npm/egg-rbac
 [download-image]: https://img.shields.io/npm/dm/egg-rbac.svg?style=flat-square
