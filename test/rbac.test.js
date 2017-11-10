@@ -1,6 +1,7 @@
 'use strict';
 
 const mm = require('egg-mock');
+const assert = require('power-assert');
 
 describe('test/rbac.test.js', () => {
   let app;
@@ -15,6 +16,50 @@ describe('test/rbac.test.js', () => {
   after(() => app.close());
   afterEach(mm.restore);
 
+  const roles = [
+    { name: 'editer', alias: '编辑', grants: [ 'create_article', 'delete_article', 'create_article', 'edit_article' ] },
+  ];
+
+  it('should get Error when call newRole method with error parameter', function* () {
+    assert(app.rbac.newRole({}).message === '[egg-rbac] newRole parameter name is undefined');
+    assert(app.rbac.newRole({ name: 'admin' }).message === '[egg-rbac] newRole parameter alias is undefined');
+  });
+
+  it('should get Error when call newPermission method with error parameter', function* () {
+    assert(app.rbac.newPermission({}).message === '[egg-rbac] newPermission parameter name is undefined');
+    assert(app.rbac.newPermission({ name: 'delete_user' }).message === '[egg-rbac] newPermission parameter alias is undefined');
+  });
+
+  it('should get Error when call addPermission method with error parameter', function* () {
+    assert(app.rbac.addPermission().message === '[egg-rbac] addPermission parameter _id is undefined');
+    assert(app.rbac.addPermission('2112').message === '[egg-rbac] addPermission parameter permissionIds is undefined');
+  });
+
+  it('should get Error when call getRolePermission method parameter name is undefined ', function* () {
+    assert(app.rbac.getRolePermission().message === '[egg-rbac] getRolePermission parameter name must string');
+    assert(app.rbac.getRolePermission({}).message === '[egg-rbac] getRolePermission parameter name must string');
+  });
+
+  it('should return add permission to role when addPermission', function* () {
+    const role = yield app.mongoose.model('Role').findOne({ name: 'editer' });
+    const permission1 = yield app.mongoose.model('Permission').findOne({ name: 'create_user' });
+    const permission2 = yield app.mongoose.model('Permission').findOne({ name: 'query_user' });
+    const result = yield app.rbac.addPermission(role._id, [ permission1._id, permission2._id ]);
+    assert(result.ok === 1);
+  });
+
+  it('should get all roles after app start', function* () {
+    const allRoles1 = yield app.rbac.getAllRoles();
+    const allRoles2 = yield app.mongoose.model('Role').find({});
+    assert.deepEqual(allRoles1, allRoles2);
+  });
+
+  it('should not add roles when call _initRole with exist role info', function* () {
+    const result = yield app.rbac._initRole(roles);
+    console.info(result);
+    assert(1);
+  });
+
   it('should GET /admin 200 when role is admin', function* () {
     const roleName = 'admin';
     const permissions = yield app.rbac.getRolePermission(roleName);
@@ -28,6 +73,7 @@ describe('test/rbac.test.js', () => {
           permission: { roleName, permissions },
         },
       });
+
 
     // with session info so no need role
     app.mockSession({
