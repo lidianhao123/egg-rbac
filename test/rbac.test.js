@@ -2,6 +2,7 @@
 
 const mm = require('egg-mock');
 const assert = require('power-assert');
+const permissions = require('./fixtures/apps/rbac-test/config/rbac').permissions;
 
 describe('test/rbac.test.js', () => {
   let app;
@@ -20,9 +21,30 @@ describe('test/rbac.test.js', () => {
     { name: 'editer', alias: '编辑', grants: [ 'create_article', 'delete_article', 'create_article', 'edit_article' ] },
   ];
 
+  it('should get Error when call initData method with error parameter', function* () {
+    try {
+      app.rbac.initData();
+    } catch (e) {
+      assert(e.message === '[egg-rbac] initData parameter permissions is undefined');
+    }
+    try {
+      app.rbac.initData({});
+    } catch (e) {
+      assert(e.message === '[egg-rbac] initData parameter roles is undefined');
+    }
+  });
+
   it('should get Error when call newRole method with error parameter', function* () {
     assert(app.rbac.newRole({}).message === '[egg-rbac] newRole parameter name is undefined');
     assert(app.rbac.newRole({ name: 'admin' }).message === '[egg-rbac] newRole parameter alias is undefined');
+  });
+
+  it('should retrun permission object when call newPermission', function* () {
+    const permissionData = { name: 'test_new_permission', alias: '测试' };
+    const result = yield app.rbac.newPermission(permissionData);
+    assert(result.name === permissionData.name);
+    assert(result.alias === permissionData.alias);
+    assert(result._id);
   });
 
   it('should get Error when call newPermission method with error parameter', function* () {
@@ -54,10 +76,17 @@ describe('test/rbac.test.js', () => {
     assert.deepEqual(allRoles1, allRoles2);
   });
 
+  it('should not add roles when call _initPermissions with exist permission info', function* () {
+    const result1 = yield app.rbac._initPermissions([]);
+    assert(result1.length === 0);
+    const result2 = yield app.rbac._initPermissions(permissions);
+    assert(result2.length === 0);
+  });
+
   it('should not add roles when call _initRole with exist role info', function* () {
     const result = yield app.rbac._initRole(roles);
-    console.info(result);
-    assert(1);
+    assert(result[0].ok === 1);
+    assert(result[1].ok === 1);
   });
 
   it('should GET /admin 200 when role is admin', function* () {
