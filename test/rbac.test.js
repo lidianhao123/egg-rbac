@@ -1,8 +1,6 @@
 'use strict';
 
-const request = require('supertest');
 const mm = require('egg-mock');
-const assert = require('assert');
 
 describe('test/rbac.test.js', () => {
   let app;

@@ -1,7 +1,6 @@
 'use strict';
 
 const Role = require('../../lib/role');
-const assert = require('assert');
 
 // options: 中间件的配置项，框架会将 app.config[${middlewareName}] 传递进来
 module.exports = options => {

@@ -11,7 +11,7 @@ exports.rbac = {
    * @param {object} ctx - egg context object
    * @return {object} promise, if resolve data is falsy, no role
    */
-  * getRoleName(ctx) {
+  * getRoleName(ctx) { // eslint-disable-line
     return Promise.resolve('');
   },
 };
