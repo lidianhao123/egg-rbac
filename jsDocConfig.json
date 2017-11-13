@@ -1,0 +1,14 @@
+ {
+  "tags": {
+    "allowUnknownTags": true
+  },
+  "opts": {
+    "destination": "./docs"
+  },
+  "plugins": [
+    "plugins/markdown"
+  ],
+  "source": {
+    "include": "./lib"
+  }
+}

@@ -27,6 +27,7 @@
     "egg-mongoose": "^2.1.1",
     "eslint": "^4.10.0",
     "eslint-config-egg": "^5.1.1",
+    "jsdoc": "^3.5.5",
     "mongoose": "^4.13.1",
     "power-assert": "^1.4.4",
     "supertest": "^3.0.0"
@@ -41,7 +42,8 @@
     "lint": "eslint .",
     "ci": "egg-bin pkgfiles --check && npm run lint && npm run cov",
     "pkgfiles": "egg-bin pkgfiles",
-    "autod": "autod"
+    "autod": "autod",
+    "docs": "jsdoc -c jsDocConfig.json -r"
   },
   "files": [
     "app",
