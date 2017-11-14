@@ -1,4 +1,3 @@
-# 正在开发中
 # egg-rbac
 
 [![NPM version][npm-image]][npm-url]
@@ -25,14 +24,13 @@
 Description here.
 -->
 
-## 依赖说明
+## [English](./README.md)
 
 ### 依赖的 egg 版本
 
 egg-rbac 版本 | egg 1.x
 --- | ---
-1.x | 😁
-0.x | ❌
+0.x | 😁
 
 ### 依赖的插件
 <!--
@@ -44,6 +42,8 @@ egg-rbac 版本 | egg 1.x
 
 -->
 
+- [egg-mongoose](https://github.com/eggjs/egg-mongoose)
+
 ## 开启插件
 
 ```js
@@ -54,23 +54,49 @@ exports.rbac = {
 };
 ```
 
-## 使用场景
-
-- Why and What: 描述为什么会有这个插件，它主要在完成一件什么事情。
-尽可能描述详细。
-- How: 描述这个插件是怎样使用的，具体的示例代码，甚至提供一个完整的示例，并给出链接。
-
 ## 详细配置
 
-请到 [config/config.default.js](config/config.default.js) 查看详细配置项说明。
+配置获取角色名称
+```js
+// {app_root}/config/config.default.js
+exports.rbac = {
+  /**
+   * @param {object} ctx - egg context object
+   * @return {object} promise, if resolve data is falsy, no role
+   */
+  * getRoleName(ctx) {
+    return Promise.resolve('');
+  },
+};
+```
 
-## 单元测试
+配置系统初始化权限和角色
+```js
+// {app_root/config/rbac.js}
+'use strict';
 
-<!-- 描述如何在单元测试中使用此插件，例如 schedule 如何触发。无则省略。-->
+exports.permissions = [
+  // action_resource
+  // { name: 'create_user', alias: '创建用户' },
+  // { name: 'delete_user', alias: '删除用户' },
+  // { name: 'query_user', alias: '查询用户' },
+  // { name: 'edit_user', alias: '修改用户' },
+];
 
-## 提问交流
+exports.roles = [
+  // { name: 'admin', alias: '管理员', grants: exports.permissions.map(item => item.name) },
+];
+```
 
-请到 [egg issues](https://github.com/eggjs/egg/issues) 异步交流。
+请到 [config/config.unittest.js](./test/fixtures/apps/rbac-test/config/config.unittest.js) 查看详细配置项说明。
+
+## 例子
+
+请参考测试示例 [rbac-test](./test/fixtures/apps/rbac-test/)
+
+## 说明
+
+- 系统自动创建一个 superadmin 角色具备所有权限。
 
 ## License
 

@@ -1,4 +1,3 @@
-# Under development
 # egg-rbac
 
 [![NPM version][npm-image]][npm-url]
@@ -24,12 +23,17 @@
 <!--
 Description here.
 -->
+## [中文说明](./README.zh_CN.md)
 
 ## Install
 
 ```bash
 $ npm i egg-rbac --save
 ```
+
+## depend on egg plugin
+
+- [egg-mongoose](https://github.com/eggjs/egg-mongoose)
 
 ## Usage
 
@@ -43,21 +47,47 @@ exports.rbac = {
 
 ## Configuration
 
+config getRoleName
 ```js
 // {app_root}/config/config.default.js
 exports.rbac = {
+  /**
+   * @param {object} ctx - egg context object
+   * @return {object} promise, if resolve data is falsy, no role
+   */
+  * getRoleName(ctx) {
+    return Promise.resolve('');
+  },
 };
 ```
 
-see [config/config.default.js](config/config.default.js) for more detail.
+Initialize roles and permissions
+```js
+// {app_root/config/rbac.js}
+'use strict';
+
+exports.permissions = [
+  // action_resource
+  // { name: 'create_user', alias: '创建用户' },
+  // { name: 'delete_user', alias: '删除用户' },
+  // { name: 'query_user', alias: '查询用户' },
+  // { name: 'edit_user', alias: '修改用户' },
+];
+
+exports.roles = [
+  // { name: 'admin', alias: '管理员', grants: exports.permissions.map(item => item.name) },
+];
+```
+
+see [config/config.unittest.js](./test/fixtures/apps/rbac-test/config/config.unittest.js) for more detail.
 
 ## Example
 
-<!-- example here -->
+see [rbac-test](./test/fixtures/apps/rbac-test/)
 
-## Questions & Suggestions
+## Remarks
 
-Please open an issue [here](https://github.com/eggjs/egg/issues).
+- It will create a superadmin role which own all permissions.
 
 ## License
 
