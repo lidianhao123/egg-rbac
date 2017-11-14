@@ -57,6 +57,8 @@ describe('test/mongoose.test.js', () => {
     assert(role1.alias === testRole.alias);
     const role2 = yield msi.newRole(testRole);
     assert(role2 === null);
+    // const result = yield db.model('Role').update({ _id: role1._id }, { $set: { alias: '222' } });
+    // assert.deepEqual(result, { ok: 1, n: 1, nModified: 1 });
   });
 
   it('shuold create a new permission', function* () {
@@ -65,6 +67,59 @@ describe('test/mongoose.test.js', () => {
     assert(permission1.alias === testPermission.alias);
     const permission = yield msi.newPermission(testPermission);
     assert(permission === null);
+  });
+
+  it('shuold modify role alias', function* () {
+    const newRoleAlias = '测试角色修改别名';
+    const oldRole = yield db.model('Role').findOne({ name: testRole.name });
+    const result1 = yield msi.modifyRoleAlias(oldRole._id, newRoleAlias);
+    assert.deepEqual(result1, { ok: 1, n: 1, nModified: 1 });
+
+    const result2 = yield msi.modifyRoleAlias('5a0912bd8546bd342035638B', newRoleAlias);
+    assert.deepEqual(result2, { ok: 1, n: 0, nModified: 0 });
+
+    const result3 = yield msi.modifyRoleAlias(oldRole._id, testRole.alias);
+    assert.deepEqual(result3, { ok: 1, n: 1, nModified: 1 });
+  });
+
+  it('shuold modify permission alias', function* () {
+    const newPermissionAlias = '测试权限修改别名';
+    const oldPermission = yield db.model('Permission').findOne({ name: testPermission.name });
+    const result1 = yield msi.modifyPermissionAlias(oldPermission._id, newPermissionAlias);
+    assert.deepEqual(result1, { ok: 1, n: 1, nModified: 1 });
+
+    const result2 = yield msi.modifyPermissionAlias('5a0912bd8546bd342035638B', newPermissionAlias);
+    assert.deepEqual(result2, { ok: 1, n: 0, nModified: 0 });
+
+    const result3 = yield msi.modifyPermissionAlias(oldPermission._id, testPermission.alias);
+    assert.deepEqual(result3, { ok: 1, n: 1, nModified: 1 });
+  });
+
+  it('shuold remove role success', function* () {
+    const roleData = {
+      name: 'test_remove',
+      alias: '测试删除角色',
+    };
+    const role = yield msi.newRole(roleData);
+
+    const result = yield msi.removeRole(role._id);
+    assert.deepEqual(result.result, { n: 1, ok: 1 });
+  });
+
+  it('shuold remove permission success', function* () {
+    const permissionData = {
+      name: 'test_remove',
+      alias: '测试删除权限',
+    };
+    const permission = yield msi.newPermission(permissionData);
+    const role = yield msi.getRole(testRole.name);
+    assert(role.name === testRole.name);
+    const result1 = yield msi.addPermission(role._id, [ permission._id ]);
+    assert.deepEqual(result1, { ok: 1, n: 1, nModified: 1 });
+
+    const [ result2, result3 ] = yield msi.removePermission(permission._id);
+    assert.deepEqual(result2.result, { n: 1, ok: 1 });
+    assert.deepEqual(result3, { ok: 1, n: 1, nModified: 1 });
   });
 
   it('shuold get role', function* () {
@@ -92,18 +147,18 @@ describe('test/mongoose.test.js', () => {
     assert(permission.length === 1);
   });
 
-  it('shuold add permission to the role', function* () {
+  it('shuold add/remove permission in the role', function* () {
     const permission = yield msi.getPermissions([ testPermission.name ]);
     const role = yield msi.getRole(testRole.name);
-    const newRole = yield msi.addPermission(role._id, [ permission[0]._id ]);
-    // console.info(newRole, permission[0]._id);
+    const result = yield msi.addPermission(role._id, [ permission[0]._id ]);
+
     assert(typeof permission[0]._id === 'object');
-    assert(newRole.ok === 1);
+    assert.deepEqual(result, { ok: 1, n: 1, nModified: 1 });
     const role2 = yield msi.getRole(testRole.name);
 
     assert(permission[0].equals(role2.grants[0]));
-    // assert(role2.grants[0]._id, permission[0]._id);
-    // assert(role2.grants[0].name, permission[0].name);
-    // assert(role2.grants[0].alias, permission[0].alias);
+
+    const result2 = yield msi.removePermissions(role._id, [ permission[0]._id ]);
+    assert.deepEqual(result2, { ok: 1, n: 1, nModified: 1 });
   });
 });
