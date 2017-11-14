@@ -9,7 +9,7 @@ exports.permissions = [
 
   { name: 'create_article', alias: '创建文章' },
   { name: 'delete_article', alias: '删除文章' },
-  { name: 'create_article', alias: '查询文章' },
+  { name: 'query_article', alias: '查询文章' },
   { name: 'edit_article', alias: '修改文章' },
 ];
 
