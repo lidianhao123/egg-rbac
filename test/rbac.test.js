@@ -95,7 +95,8 @@ describe('test/rbac.test.js', () => {
     const role = yield app.mongoose.model('Role').findOne({ name: 'editer' });
     const permission1 = yield app.mongoose.model('Permission').findOne({ name: 'create_user' });
     const permission2 = yield app.mongoose.model('Permission').findOne({ name: 'query_user' });
-    const result = yield app.rbac.addPermission(role._id, [ permission1._id, permission2._id ]);
+    const permission3 = yield app.mongoose.model('Permission').findOne({ name: 'edit_user' });
+    const result = yield app.rbac.addPermission(role._id, [ permission1._id, permission2._id, permission3._id ]);
     assert(result.ok === 1);
   });
 
@@ -136,7 +137,7 @@ describe('test/rbac.test.js', () => {
   });
 
 
-  it('shuold modify role alias', function* () {
+  it('should modify role alias', function* () {
     const newRoleAlias = '测试角色修改别名';
     const oldRole = yield app.mongoose.model('Role').findOne({ name: roles[0].name });
     const result1 = yield app.rbac.modifyRoleAlias(oldRole._id, newRoleAlias);
@@ -149,7 +150,7 @@ describe('test/rbac.test.js', () => {
     assert.deepEqual(result3, { ok: 1, n: 1, nModified: 1 });
   });
 
-  it('shuold modify permission alias', function* () {
+  it('should modify permission alias', function* () {
     const newPermissionAlias = '测试权限修改别名';
     const oldPermission = yield app.mongoose.model('Permission').findOne({ name: permissionData.name });
     const result1 = yield app.rbac.modifyPermissionAlias(oldPermission._id, newPermissionAlias);
@@ -162,7 +163,7 @@ describe('test/rbac.test.js', () => {
     assert.deepEqual(result3, { ok: 1, n: 1, nModified: 1 });
   });
 
-  it('shuold remove role success', function* () {
+  it('should remove role success', function* () {
     const roleData = {
       name: 'test_remove',
       alias: '测试删除角色',
@@ -173,25 +174,40 @@ describe('test/rbac.test.js', () => {
     assert.deepEqual(result.result, { n: 1, ok: 1 });
   });
 
-  it('shuold remove permission success', function* () {
-    const permisData = {
-      name: 'test_remove2',
-      alias: '测试删除权限',
-    };
-    const permission = yield app.rbac.newPermission(permisData);
-
-    const role = yield app.mongoose.model('Role').findOne({ name: 'editer' });
+  it('should return role when getRole', function* () {
+    assert(app.rbac.getRole().message === '[egg-rbac] getRole parameter name must string');
+    const role = yield app.rbac.getRole('editer');
     assert(role.name === 'editer');
-    const result1 = yield app.rbac.addPermission(role._id, [ permission._id ]);
-    assert.deepEqual(result1, { ok: 1, n: 1, nModified: 1 });
-    console.info(permission._id);
-    // const findRole = yield app.mongoose.model('Role').findOne({ grants: permission._id });
-    // console.info(findRole);
-    // const result3 = yield app.mongoose.model('Role').update({}, { $pull: { grants: permission._id } });
-    // console.info(result3);
-    const [ result2, result3 ] = yield app.rbac.removePermission(permission._id);
-    assert.deepEqual(result2.result, { n: 1, ok: 1 });
-    assert.deepEqual(result3, { ok: 1, n: 1, nModified: 1 });
+  });
+
+  // TODO
+  // it('should remove permission success', function* () {
+  //   const permisData = {
+  //     name: 'test_remove2',
+  //     alias: '测试删除权限',
+  //   };
+  //   const permission = yield app.rbac.newPermission(permisData);
+  //   console.info('permission._id = ', permission._id);
+
+  //   const role = yield app.rbac.getRole('editer');
+  //   assert(role.name === 'editer');
+  //   console.info('role.name = ', role.name);
+
+  //   const result1 = yield app.rbac.addPermission(role._id, [ permission._id ]);
+  //   assert.deepEqual(result1, { ok: 1, n: 1, nModified: 1 });
+  //   console.info('before start removePermission');
+
+  //   const [ res, res1 ] = yield app.rbac.removePermission(permission._id);
+  //   assert.deepEqual(res.result, { n: 1, ok: 1 });
+  //   assert.deepEqual(res1, { ok: 1, n: 1, nModified: 1 });
+  // });
+
+  it('should remove permission', function* () {
+    const obj1 = yield app.mongoose.model('Permission').findOne({ name: 'edit_user' });
+    assert(obj1.name === 'edit_user');
+    const [ res1, res ] = yield app.rbac.removePermission(obj1._id);
+    assert.deepEqual(res1.result, { ok: 1, n: 1 });
+    assert.deepEqual(res, { ok: 1, n: 1, nModified: 1 });
   });
 
   it('should GET /admin 200 when role is admin', function* () {
