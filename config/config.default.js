@@ -14,4 +14,8 @@ exports.rbac = {
   * getRoleName(ctx) { // eslint-disable-line
     return Promise.resolve('');
   },
+  superRole: {
+    name: 'superrole',
+    alias: '超级管理员',
+  },
 };
