@@ -1,10 +1,8 @@
 'use strict';
-
-module.exports = app => {
-  class AdminController extends app.Controller {
-    * index() {
-      this.ctx.body = 'success';
-    }
+const Controller = require('egg').Controller;
+class AdminController extends Controller {
+  async index() {
+    this.ctx.body = 'success';
   }
-  return AdminController;
-};
+}
+module.exports = AdminController;

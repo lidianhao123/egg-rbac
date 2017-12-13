@@ -31,6 +31,15 @@ Description here.
 $ npm i egg-rbac --save
 ```
 
+## depend on egg version
+
+egg-rbac version | egg version
+--- | ---
+0.3.0 | 1.x
+0.4.0 | 2.0.0
+
+From 0.4.0 version egg-rbac does not support egg 1.x.
+
 ## depend on egg plugin
 
 - [egg-mongoose](https://github.com/eggjs/egg-mongoose)
@@ -84,6 +93,7 @@ see [config/config.unittest.js](./test/fixtures/apps/rbac-test/config/config.uni
 ## Example
 
 see [rbac-test](./test/fixtures/apps/rbac-test/)
+practical example [egg-rbac-example](https://github.com/lidianhao123/egg-rbac-example)
 
 ## Remarks
 

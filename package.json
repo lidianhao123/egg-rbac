@@ -1,6 +1,6 @@
 {
   "name": "egg-rbac",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Role Based Access Control for eggjs",
   "eggPlugin": {
     "name": "rbac",
@@ -18,20 +18,21 @@
     "debug": "^3.1.0"
   },
   "devDependencies": {
-    "autod": "^2.10.1",
-    "autod-egg": "^1.0.0",
+    "autod": "^3.0.1",
+    "autod-egg": "^1.1.0",
     "await-event": "^2.1.0",
-    "egg": "^1.10.0",
-    "egg-bin": "^4.3.5",
+    "egg": "^2.0.0",
+    "egg-bin": "^4.3.6",
     "egg-ci": "^1.8.0",
-    "egg-mock": "^3.13.1",
+    "egg-mock": "^3.14.0",
     "egg-mongoose": "^2.1.1",
-    "eslint": "^4.10.0",
+    "eslint": "^4.13.1",
     "eslint-config-egg": "^5.1.1",
     "jsdoc": "^3.5.5",
-    "mongoose": "^4.13.1",
+    "mongoose": "^4.13.7",
     "power-assert": "^1.4.4",
-    "supertest": "^3.0.0"
+    "supertest": "^3.0.0",
+    "webstorm-disable-index": "^1.2.0"
   },
   "engines": {
     "node": ">=6.0.0"

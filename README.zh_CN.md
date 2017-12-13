@@ -28,9 +28,12 @@ Description here.
 
 ### 依赖的 egg 版本
 
-egg-rbac 版本 | egg 1.x
+egg-rbac 版本 | egg 版本
 --- | ---
-0.x | 😁
+0.3.0 | 1.x
+0.4.0 | 2.0.0
+
+从 0.4.0 版本开始 egg-rbac 不在支持 egg 1.x 版本
 
 ### 依赖的插件
 <!--
@@ -93,6 +96,7 @@ exports.roles = [
 ## 例子
 
 请参考测试示例 [rbac-test](./test/fixtures/apps/rbac-test/)
+实际使用例子 [egg-rbac-example](https://github.com/lidianhao123/egg-rbac-example)
 
 ## 说明
 
