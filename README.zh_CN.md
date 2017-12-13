@@ -26,7 +26,13 @@ Description here.
 
 ## [English](./README.md)
 
-### 依赖的 egg 版本
+## 安装
+
+```bash
+$ npm i egg-rbac --save
+```
+
+## 依赖的 egg 版本
 
 egg-rbac 版本 | egg 版本
 --- | ---
@@ -35,7 +41,7 @@ egg-rbac 版本 | egg 版本
 
 从 0.4.0 版本开始 egg-rbac 不在支持 egg 1.x 版本
 
-### 依赖的插件
+## 依赖的插件
 <!--
 
 如果有依赖其它插件，请在这里特别说明。如
@@ -95,8 +101,8 @@ exports.roles = [
 
 ## 例子
 
-请参考测试示例 [rbac-test](./test/fixtures/apps/rbac-test/)
-实际使用例子 [egg-rbac-example](https://github.com/lidianhao123/egg-rbac-example)
+1. 请参考测试示例 [rbac-test](./test/fixtures/apps/rbac-test/)
+2. 实际使用例子 [egg-rbac-example](https://github.com/lidianhao123/egg-rbac-example)
 
 ## 说明
 

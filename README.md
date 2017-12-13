@@ -92,8 +92,8 @@ see [config/config.unittest.js](./test/fixtures/apps/rbac-test/config/config.uni
 
 ## Example
 
-see [rbac-test](./test/fixtures/apps/rbac-test/)
-practical example [egg-rbac-example](https://github.com/lidianhao123/egg-rbac-example)
+1. see [rbac-test](./test/fixtures/apps/rbac-test/)
+2. practical example [egg-rbac-example](https://github.com/lidianhao123/egg-rbac-example)
 
 ## Remarks
 
